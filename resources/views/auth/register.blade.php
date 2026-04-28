@@ -358,6 +358,7 @@
             .form-title { font-size: 30px; }
         }
     </style>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
 
@@ -411,6 +412,10 @@
             <div class="error-msg">{{ $errors->first() }}</div>
         @endif
 
+        @error('recaptcha')
+            <div class="error-msg" style="margin-bottom:16px;">{{ $message }}</div>
+        @enderror
+
         <form method="POST" action="{{ route('register') }}">
             @csrf
 
@@ -451,6 +456,10 @@
                     class="form-input" placeholder="Repeat your password" required>
             </div>
 
+            <div class="g-recaptcha" 
+                data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"
+                style="margin-bottom:20px;transform:scale(0.95);transform-origin:left top;">
+            </div>
             <button type="submit" class="btn-submit">Create account</button>
         </form>
 

@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -35,6 +36,22 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+        // Verify reCAPTCHA
+        $recaptcha = $request->input('g-recaptcha-response');
+        if (!$recaptcha) {
+            return back()->withErrors(['recaptcha' => 'Please complete the reCAPTCHA.'])->withInput();
+        }
+
+        $response = Http::post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => env('RECAPTCHA_SECRET_KEY'),
+            'response' => $recaptcha,
+            'remoteip' => $request->ip(),
+        ]);
+
+        if (!$response->json('success')) {
+            return back()->withErrors(['recaptcha' => 'reCAPTCHA verification failed. Please try again.'])->withInput();
+        }
 
         $user = User::create([
             'name' => $request->name,

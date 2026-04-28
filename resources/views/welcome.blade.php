@@ -931,7 +931,7 @@
 <footer>
     <div class="footer-brand">Task<span>flow</span></div>
     <div class="footer-meta">
-        <div class="footer-version">v1.0.0 &nbsp;—&nbsp; {{ date('Y') }}</div>
+        <div class="footer-version">v1.1.0 &nbsp;—&nbsp; {{ date('Y') }}</div>
         <div class="footer-copy">crafted with care &nbsp;&middot;&nbsp; all rights reserved</div>
     </div>
 </footer>
