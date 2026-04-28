@@ -108,6 +108,20 @@
 
         .nav-right { display: flex; gap: 12px; align-items: center; }
 
+        .nav-login {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            padding: 9px 20px;
+            border: 1px solid var(--border);
+            border-radius: 2px;
+        }
+        .nav-login:hover { color: var(--rose); border-color: var(--rose); }
+
         .dark-toggle {
             width: 40px; height: 40px;
             border-radius: 50%;
@@ -779,6 +793,7 @@
                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </svg>
         </button>
+        <a href="{{ route('login') }}" class="nav-login">Sign in</a>
         <a href="{{ route('register') }}" class="nav-btn">Get started</a>
     </div>
 </nav>

@@ -16,6 +16,7 @@ class Task extends Model
         'priority',
         'is_completed',
         'due_date',
+        'category_id',
     ];
 
     protected $casts = [
@@ -26,5 +27,10 @@ class Task extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 }

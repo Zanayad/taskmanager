@@ -10,8 +10,9 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Auth::user()->tasks()->latest()->get();
-        return view('tasks.index', compact('tasks'));
+        $tasks = Auth::user()->tasks()->with('category')->latest()->get();
+        $categories = Auth::user()->categories()->orderBy('name')->get();
+        return view('tasks.index', compact('tasks', 'categories'));
     }
 
     public function store(Request $request)
@@ -21,6 +22,7 @@ class TaskController extends Controller
             'description' => 'nullable|string',
             'priority' => 'required|in:low,medium,high',
             'due_date' => 'nullable|date',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         Auth::user()->tasks()->create($request->all());
